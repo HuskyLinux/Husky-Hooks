@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+#-*-coding:utf-8 -*-
+#Auto updated?
+#   Yes
+#File:
+#   husky-hooks-runner
+#Author:
+#   The-Repo-Club [wayne6324@gmail.com]
+#Github:
+#   https://github.com/The-Repo-Club/
+#
+#Created:
+#   Fri 09 September 2022, 04:08:49 PM [GMT+1]
+#Modified:
+#   Fri 09 September 2022, 04:18:33 PM [GMT+1]
+#
+#Description:
+#   Run HuskyLinux hooks related commands.
+#
+#Dependencies:
+#   bash
+#
+
+Lsb_release() {
+  local file=/etc/lsb-release
+
+  if ! grep -q "^DISTRIB_CODENAME=" $file; then
+    # add missing DISTRIB_CODENAME=
+    echo "DISTRIB_CODENAME=rolling" >>$file
+  fi
+  sed -i $file \
+    -e 's|^DISTRIB_ID=.*$|DISTRIB_ID=HuskyLinux|' \
+    -e 's|^DISTRIB_CODENAME=.*$|DISTRIB_CODENAME=rolling|' \
+    -e 's|^DISTRIB_DESCRIPTION=.*$|DISTRIB_DESCRIPTION=\"Husky Linux\"|'
+}
+
+Os_release() {
+  local file=/usr/lib/os-release
+
+  sed -i $file \
+    -e 's|^NAME=.*$|NAME=HuskyLinux|' \
+    -e 's|^PRETTY_NAME=.*$|PRETTY_NAME=HuskyLinux|' \
+    -e "s|^LOGO=.*$|LOGO=HuskyLinux|" \
+    -e "s|^ID=.*$|ID=HuskyLinux|" \
+    -e "s|^ID_LIKE=.*$|ID_LIKE=arch|"
+
+  if ! grep -q "^ID_LIKE=" $file && grep -q "^ID=" $file; then
+    # add missing ID_LIKE=
+    sed -i $file -e '/^ID=/a \ID_LIKE=arch'
+  fi
+}
+
+Issues() {
+    sed -i 's|Arch|HuskyLinux|g' /etc/issue /usr/share/factory/etc/issue
+}
+
+Main()
+{
+    local hookname="$1"
+
+    case "$hookname" in
+        os-release)  Os_release ;;
+        lsb-release) Lsb_release ;;
+        "")          Os_release
+                     Lsb_release
+                     Issues
+                     ;;
+    esac
+}
+
+Main "$@"

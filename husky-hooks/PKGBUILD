@@ -1,0 +1,35 @@
+# Maintainer: The-Repo-Club <The-Repo-Club@github.com>
+# Contributor: The-Repo-Club <The-Repo-Club@github.com>
+# shellcheck disable=all
+
+pkgname=husky-hooks
+pkgver=2022.09.09
+pkgrel=1
+pkgdesc='HuskyLinux pacman hooks'
+arch=('any')
+license=('MIT')
+url=https://github.com/Archaholic/HuskyLinux/tree/main/$pkgname
+depends=(libnotify)
+
+source=(
+  "$url/husky-os-release.hook"
+  "$url/husky-lsb-release.hook"
+  "$url/${pkgname}.hook"
+  "$url/${pkgname}-runner"
+  "$url/husky-reboot-required"
+  "$url/husky-reboot-required.hook"
+)
+sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
+
+package() {
+  local hooks=$pkgdir/etc/pacman.d/hooks
+  local bin=$pkgdir/usr/bin
+
+  install -Dm644 husky-lsb-release.hook $hooks/husky-lsb-release.hook
+  install -Dm644 husky-os-release.hook $hooks/husky-os-release.hook
+  install -Dm644 ${pkgname}.hook $hooks/${pkgname}.hook
+  install -Dm644 husky-reboot-required.hook $hooks/husky-reboot-required.hook
+
+  install -Dm755 husky-reboot-required $bin/husky-reboot-required
+  install -Dm755 ${pkgname}-runner $bin/${pkgname}-runner
+}
