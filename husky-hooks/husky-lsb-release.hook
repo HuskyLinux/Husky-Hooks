@@ -2,9 +2,9 @@
 Operation = Install
 Operation = Upgrade
 Type = Package
-Target = husky-hooks
+Target = lsb-release
 
 [Action]
 Description = Update HuskyLinux specific config.
 When = PostTransaction
-Exec = /usr/bin/husky-hooks-runner
+Exec = /usr/bin/husky-hooks-runner lsb-release
