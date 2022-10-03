@@ -7,6 +7,7 @@ pkgver=2022.10.03
 pkgrel=1
 pkgdesc='HuskyLinux pacman hooks'
 arch=('any')
+groups=('linuxrepos')
 license=('MIT')
 url=https://github.com/HuskyLinux/husky-hooks/tree/main/$pkgname
 depends=(libnotify)
