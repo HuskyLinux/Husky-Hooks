@@ -9,7 +9,7 @@ pkgdesc='HuskyLinux pacman hooks'
 arch=('any')
 groups=('linuxrepos')
 license=('MIT')
-url=https://github.com/HuskyLinux/husky-hooks/tree/main/$pkgname
+url=https://github.com/HuskyLinux/${pkgname}/tree/main/
 depends=(libnotify)
 
 source=(
