@@ -3,7 +3,7 @@
 # shellcheck disable=all
 
 pkgname=husky-hooks
-pkgver=2022.09.09
+pkgver=2022.10.03
 pkgrel=1
 pkgdesc='HuskyLinux pacman hooks'
 arch=('any')
